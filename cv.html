@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CV | Sudhir K. Sahu</title>
+<meta name="description" content="Curriculum vitae of Dr. Sudhir Kumar Sahu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0C121D;
+  --bg-soft:#111A29;
+  --panel:#15203488;
+  --panel-solid:#152034;
+  --line:#25324A;
+  --text:#E9EEF6;
+  --muted:#93A1B8;
+  --accent:#5FE0C9;
+  --accent-2:#F2A65A;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  --sans:'Inter', -apple-system, sans-serif;
+  --display:'Space Grotesk', var(--sans);
+  --maxw:920px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:var(--sans); line-height:1.6; font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:"";
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 900px 500px at 15% -10%, #16324a55, transparent 60%),
+    radial-gradient(ellipse 700px 500px at 100% 10%, #1c2b4a4d, transparent 60%);
+}
+a{color:inherit;}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px; position:relative; z-index:1;}
+img{max-width:100%; display:block;}
+
+/* ---- Nav ---- */
+header.site{
+  position:sticky; top:0; z-index:50;
+  background:#0C121Dcc; backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav{
+  display:flex; align-items:center; justify-content:space-between;
+  max-width:var(--maxw); margin:0 auto; padding:16px 24px;
+}
+.nav .brand{
+  font-family:var(--mono); font-size:13px; letter-spacing:.06em;
+  color:var(--muted); text-decoration:none; text-transform:uppercase;
+}
+.nav .brand b{color:var(--text); font-weight:600;}
+.nav ul{
+  list-style:none; display:flex; gap:28px; margin:0; padding:0;
+}
+.nav a.navlink{
+  text-decoration:none; color:var(--muted); font-size:14.5px; font-weight:500;
+  padding:6px 0; border-bottom:1px solid transparent; transition:color .15s, border-color .15s;
+}
+.nav a.navlink:hover{color:var(--text);}
+.nav a.navlink.active{color:var(--accent); border-color:var(--accent);}
+.nav-toggle{display:none; background:none; border:none; color:var(--text); font-size:22px; cursor:pointer;}
+
+@media (max-width:720px){
+  .nav ul{
+    position:fixed; top:57px; left:0; right:0; background:var(--bg-soft);
+    flex-direction:column; gap:0; border-bottom:1px solid var(--line);
+    max-height:0; overflow:hidden; transition:max-height .25s ease;
+  }
+  .nav ul.open{max-height:400px;}
+  .nav ul li{border-top:1px solid var(--line);}
+  .nav a.navlink{display:block; padding:16px 24px;}
+  .nav-toggle{display:block;}
+}
+
+/* ---- Eyebrow / labels ---- */
+.eyebrow{
+  font-family:var(--mono); font-size:12.5px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--accent); margin:0 0 14px;
+}
+.eyebrow.warm{color:var(--accent-2);}
+
+/* ---- Hero ---- */
+.hero{
+  padding:76px 0 40px; position:relative; overflow:hidden;
+}
+.hero h1{
+  font-family:var(--display); font-size:clamp(34px,5vw,54px); line-height:1.08;
+  margin:0 0 10px; font-weight:600; letter-spacing:-.01em;
+}
+.hero .role{
+  font-size:18px; color:var(--muted); margin:0 0 26px; max-width:60ch;
+}
+.hero .role b{color:var(--text); font-weight:600;}
+.links-row{display:flex; flex-wrap:wrap; gap:12px; margin-top:8px;}
+.pill-link{
+  display:inline-flex; align-items:center; gap:8px;
+  border:1px solid var(--line); border-radius:999px; padding:9px 18px;
+  text-decoration:none; font-size:14px; color:var(--text); font-weight:500;
+  transition:border-color .15s, transform .15s;
+}
+.pill-link:hover{border-color:var(--accent); transform:translateY(-1px);}
+.pill-link.solid{background:var(--accent); color:#08151A; border-color:var(--accent); font-weight:600;}
+.pill-link.solid:hover{background:#7CEBD8;}
+
+/* ---- Resonance signature graphic ---- */
+.resonance{
+  width:100%; height:auto; margin-top:36px;
+}
+.resonance path.trace{
+  fill:none; stroke:var(--accent); stroke-width:1.6;
+  stroke-dasharray:900; stroke-dashoffset:900;
+  animation:draw 1.8s cubic-bezier(.4,.6,.2,1) .2s forwards;
+}
+.resonance .gridline{stroke:var(--line); stroke-width:1;}
+.resonance .tick{fill:var(--muted); font-family:var(--mono); font-size:10px;}
+@keyframes draw{ to{stroke-dashoffset:0;} }
+@media (prefers-reduced-motion:reduce){
+  .resonance path.trace{animation:none; stroke-dashoffset:0;}
+}
+
+/* ---- Sections ---- */
+section{padding:44px 0;}
+section.divider-top{border-top:1px solid var(--line);}
+h2.section-title{
+  font-family:var(--display); font-size:26px; margin:0 0 22px; font-weight:600;
+}
+p.lede{color:var(--muted); max-width:68ch; margin:0 0 28px;}
+
+/* ---- Cards ---- */
+.grid{display:grid; gap:16px;}
+.grid.cols-3{grid-template-columns:repeat(3,1fr);}
+@media (max-width:800px){ .grid.cols-3{grid-template-columns:1fr;} }
+.card{
+  background:var(--panel); border:1px solid var(--line); border-radius:14px;
+  padding:22px; position:relative;
+}
+.card .tag{
+  font-family:var(--mono); font-size:11.5px; color:var(--accent); letter-spacing:.05em;
+  text-transform:uppercase; display:block; margin-bottom:10px;
+}
+.card h3{margin:0 0 8px; font-size:17px; font-family:var(--display); font-weight:600;}
+.card p{margin:0; color:var(--muted); font-size:14.5px;}
+
+/* ---- Timeline ---- */
+.timeline{border-left:1px solid var(--line); margin-left:6px;}
+.tl-item{position:relative; padding:2px 0 30px 28px;}
+.tl-item::before{
+  content:""; position:absolute; left:-5px; top:6px; width:9px; height:9px;
+  border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px #0C121D;
+}
+.tl-item .period{font-family:var(--mono); font-size:12.5px; color:var(--accent); display:block; margin-bottom:4px;}
+.tl-item h3{margin:0 0 4px; font-size:17px; font-family:var(--display); font-weight:600;}
+.tl-item .org{color:var(--muted); font-size:14.5px; margin:0 0 8px;}
+.tl-item .desc{font-size:14.5px; color:#C4CEDE; margin:0;}
+
+/* ---- Toolkit pills ---- */
+.toolkit{display:flex; flex-wrap:wrap; gap:9px;}
+.toolkit span{
+  font-family:var(--mono); font-size:12.5px; color:var(--text);
+  border:1px solid var(--line); border-radius:7px; padding:6px 11px; background:var(--bg-soft);
+}
+
+/* ---- Publications ---- */
+.pub{
+  border-bottom:1px solid var(--line); padding:20px 0; display:flex; gap:18px;
+}
+.pub:last-child{border-bottom:none;}
+.pub .num{font-family:var(--mono); color:var(--muted); font-size:14px; padding-top:2px; min-width:22px;}
+.pub .body b{font-weight:600;}
+.pub .body p{margin:0 0 6px; font-size:15px;}
+.pub .venue{font-size:13.5px; color:var(--muted);}
+.pub .venue a{color:var(--accent); text-decoration:none; border-bottom:1px solid #5FE0C955;}
+.pub .venue a:hover{border-color:var(--accent);}
+.pub-prep{
+  background:var(--panel); border:1px dashed var(--line); border-radius:12px; padding:18px 20px; margin-bottom:8px;
+}
+
+/* ---- Table (skills/awards) ---- */
+.kv{width:100%; border-collapse:collapse; font-size:14.5px;}
+.kv tr{border-bottom:1px solid var(--line);}
+.kv td{padding:12px 4px; vertical-align:top;}
+.kv td:first-child{color:var(--muted); font-family:var(--mono); font-size:12.5px; width:32%; padding-right:16px;}
+
+/* ---- Footer ---- */
+footer.site{
+  border-top:1px solid var(--line); padding:36px 0 40px; margin-top:40px;
+}
+footer.site .foot-row{
+  display:flex; flex-wrap:wrap; justify-content:space-between; gap:16px; align-items:center;
+}
+footer.site .name{font-family:var(--display); font-weight:600;}
+footer.site .muted{color:var(--muted); font-size:13.5px;}
+footer.site a{text-decoration:none; color:var(--muted); font-size:13.5px;}
+footer.site a:hover{color:var(--accent);}
+
+.two-col{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+@media (max-width:700px){ .two-col{grid-template-columns:1fr;} }
+
+.btn-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px;}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="nav">
+    <a class="brand" href="index.html"><b>Sudhir K. Sahu</b> &nbsp;/ cQED &amp; Quantum Devices</a>
+    <button class="nav-toggle" aria-label="Toggle menu">&#9776;</button>
+    <ul><li><a class="navlink" href="index.html">Home</a></li><li><a class="navlink" href="experience.html">Experience</a></li><li><a class="navlink" href="publications.html">Publications</a></li><li><a class="navlink active" href="cv.html">CV</a></li><li><a class="navlink" href="contact.html">Contact</a></li></ul>
+  </nav>
+</header>
+
+
+<div class="wrap">
+  <section class="hero" style="padding-bottom:10px;">
+    <p class="eyebrow">Curriculum Vitae</p>
+    <h1 style="font-size:clamp(28px,4vw,40px);">CV</h1>
+    <p class="role">Full academic CV, including publications, talks, and teaching experience.</p>
+    <div class="btn-row">
+      <a class="pill-link solid" href="Sudhir_Kumar_Sahu_CV.pdf" target="_blank" rel="noopener">Download PDF &rarr;</a>
+      <a class="pill-link" href="mailto:sudhir.sahu@colorado.edu">Request updated copy</a>
+    </div>
+  </section>
+
+  <section class="divider-top">
+    <h2 class="section-title">At a glance</h2>
+    <table class="kv">
+      <tr><td>Position</td><td>Postdoctoral Research Fellow, University of Colorado Boulder (with NIST)</td></tr>
+      <tr><td>Ph.D.</td><td>Physics, Indian Institute of Science, Bangalore, 2022</td></tr>
+      <tr><td>Research</td><td>Circuit QED, parametric amplification, qubit readout, cavity electromechanics, hybrid quantum systems</td></tr>
+      <tr><td>Publications</td><td>8 peer-reviewed, 1 in preparation</td></tr>
+      <tr><td>Email</td><td>sudhir.sahu@colorado.edu</td></tr>
+    </table>
+  </section>
+</div>
+
+
+<footer class="site">
+  <div class="wrap foot-row">
+    <div>
+      <div class="name">Dr. Sudhir Kumar Sahu</div>
+      <div class="muted">Boulder, Colorado, USA</div>
+    </div>
+    <div class="btn-row">
+      <a href="mailto:sudhir.sahu@colorado.edu">Email</a>
+      <a href="https://linkedin.com/in/sudhir-kumar-sahu-9232a2154" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="cv.html">CV</a>
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:18px;">
+    <span class="muted">&copy; 2026 Sudhir Kumar Sahu.</span>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var btn = document.querySelector('.nav-toggle');
+  var menu = document.querySelector('.nav ul');
+  if(btn && menu){
+    btn.addEventListener('click', function(){ menu.classList.toggle('open'); });
+    menu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ menu.classList.remove('open'); });
+    });
+  }
+});
+</script>
+</body>
+</html>
