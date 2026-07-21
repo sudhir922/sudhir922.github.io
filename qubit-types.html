@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qubit modalities | Sudhir K. Sahu</title>
+<meta name="description" content="A comparison of qubit modalities — superconducting, trapped ion, neutral atom, spin, NV center, photonic, and topological — with their tradeoffs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:        #0a1420;
+    --panel:     #0f1e30;
+    --panel-2:   #0c1826;
+    --line:      #1c3049;
+    --line-soft: #16293e;
+    --text:      #dbe6f0;
+    --muted:     #7d94ab;
+    --teal:      #4fd8c9;
+    --amber:     #f0b429;
+    --coral:     #e28a7d;
+    --teal-dim:  rgba(79,216,201,0.14);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:'IBM Plex Mono', monospace;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:var(--teal); text-decoration:none; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 20px 60px; }
+
+  header.site{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:22px 0; border-bottom:1px solid var(--line); margin-bottom:32px; flex-wrap:wrap; gap:10px;
+  }
+  .brand{ font-family:'Spectral', serif; font-size:16px; color:#f2f7fb; }
+  .brand b{ font-weight:600; }
+  nav.site-nav{ display:flex; gap:22px; flex-wrap:wrap; }
+  nav.site-nav a{ color:var(--muted); font-size:12.5px; letter-spacing:.03em; }
+  nav.site-nav a:hover, nav.site-nav a.current{ color:var(--teal); }
+
+  .eyebrow{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--teal); margin:0 0 8px; }
+  h1{ font-family:'Spectral', serif; font-weight:600; font-size:26px; margin:0 0 6px; color:#f2f7fb; }
+  .sub{ color:var(--muted); font-size:12.5px; margin:0 0 26px; line-height:1.6; max-width:700px; }
+
+  .section-title{
+    font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--muted); margin:34px 0 12px;
+  }
+
+  /* summary table */
+  .table-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+  table{ width:100%; border-collapse:collapse; font-size:11.5px; min-width:760px; }
+  th, td{ padding:10px 12px; text-align:left; border-bottom:1px solid var(--line); white-space:nowrap; }
+  th{ background:var(--panel-2); color:var(--muted); font-weight:500; letter-spacing:.03em; text-transform:uppercase; font-size:10px; }
+  tbody tr:hover{ background:var(--panel-2); }
+  tbody tr:last-child td{ border-bottom:none; }
+  td.name{ color:var(--text); font-weight:500; white-space:normal; }
+  td.name .sub-label{ display:block; color:var(--muted); font-weight:400; font-size:10px; margin-top:2px; }
+
+  /* modality cards */
+  .qgrid{ display:flex; flex-direction:column; gap:14px; }
+  .qcard{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:20px 22px; }
+  .qhead{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:8px; }
+  .qhead h2{ font-family:'Spectral', serif; font-weight:600; font-size:17px; margin:0; color:#f2f7fb; }
+  .qhead .players{ font-size:10.5px; color:var(--muted); }
+  .qdesc{ font-size:12.5px; color:var(--muted); line-height:1.6; margin:0 0 14px; max-width:760px; }
+  .prosconsGrid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width:600px){ .prosconsGrid{ grid-template-columns:1fr; } }
+  .pc-title{ font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; margin:0 0 8px; }
+  .pc-title.pro{ color:var(--teal); }
+  .pc-title.con{ color:var(--coral); }
+  ul.pc-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px; }
+  ul.pc-list li{ font-size:12px; color:var(--text); line-height:1.5; padding-left:16px; position:relative; }
+  ul.pc-list.pro li::before{ content:'+'; position:absolute; left:0; color:var(--teal); font-weight:600; }
+  ul.pc-list.con li::before{ content:'–'; position:absolute; left:0; color:var(--coral); font-weight:600; }
+
+  footer{ margin-top:40px; font-size:11px; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="site">
+    <div class="brand"><b>Sudhir K. Sahu</b> / cQED &amp; Quantum Devices</div>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="experience.html">Experience</a>
+      <a href="publications.html">Publications</a>
+      <a href="cv.html">CV</a>
+      <a href="tools.html">Tools</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div class="eyebrow">Tools · Reference</div>
+  <h1>Qubit modalities</h1>
+  <p class="sub">A working comparison of the major physical platforms being used to build qubits today — where each one is strong, where it struggles, and roughly how the numbers stack up. Figures below are typical ranges from current lab and early commercial systems, not records; any given group can beat them.</p>
+
+  <div class="section-title">At a glance</div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Modality</th>
+          <th>Typical T2</th>
+          <th>2-qubit gate fidelity</th>
+          <th>Native gate speed</th>
+          <th>Operating temp</th>
+          <th>Scalability outlook</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Superconducting<span class="sub-label">transmon</span></td>
+          <td>10 – 300 µs</td>
+          <td>99 – 99.9%</td>
+          <td>10 – 100 ns</td>
+          <td>~10 mK</td>
+          <td>Good — lithographic, but wiring/crosstalk limited</td>
+        </tr>
+        <tr>
+          <td class="name">Trapped ion</td>
+          <td>seconds – minutes</td>
+          <td>99.9 – 99.99%</td>
+          <td>1 – 100 µs</td>
+          <td>Room temp (UHV + laser cooled)</td>
+          <td>Moderate — shuttling / photonic links needed</td>
+        </tr>
+        <tr>
+          <td class="name">Neutral atom<span class="sub-label">Rydberg</span></td>
+          <td>1 – 10 s</td>
+          <td>~99 – 99.5%</td>
+          <td>0.1 – 1 µs</td>
+          <td>Room temp (laser cooled)</td>
+          <td>Very good — optical tweezer arrays reconfigure easily</td>
+        </tr>
+        <tr>
+          <td class="name">Spin qubit<span class="sub-label">Si quantum dot</span></td>
+          <td>10 µs – ms</td>
+          <td>~99 – 99.9%</td>
+          <td>10 – 100 ns</td>
+          <td>~100 mK – 1 K</td>
+          <td>Promising — CMOS-compatible fabrication</td>
+        </tr>
+        <tr>
+          <td class="name">NV / color center<span class="sub-label">diamond</span></td>
+          <td>ms – s</td>
+          <td>~99%</td>
+          <td>10 – 100 ns</td>
+          <td>Room temp possible</td>
+          <td>Limited — sparse, hard to couple densely</td>
+        </tr>
+        <tr>
+          <td class="name">Photonic</td>
+          <td>n/a (flying qubit)</td>
+          <td>~90 – 99%</td>
+          <td>light-speed transit</td>
+          <td>Room temp (cryo detectors)</td>
+          <td>Good for networking — probabilistic gates limit compute</td>
+        </tr>
+        <tr>
+          <td class="name">Topological<span class="sub-label">Majorana, experimental</span></td>
+          <td>predicted very long</td>
+          <td>not yet demonstrated</td>
+          <td>unknown</td>
+          <td>~10 mK</td>
+          <td>Unproven — protection is the whole bet</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title">In detail</div>
+  <div class="qgrid">
+
+    <div class="qcard">
+      <div class="qhead"><h2>Superconducting circuits (transmon)</h2><span class="players">Google, IBM, Rigetti, IQM</span></div>
+      <p class="qdesc">Qubits are anharmonic LC oscillators made from Josephson junctions, controlled with microwave pulses and read out through a dispersively coupled cavity — the architecture behind most of the field's largest processors.</p>
+      <div class="prosconsGrid">
+        <div><p class="pc-title pro">Pros</p><ul class="pc-list pro">
+          <li>Fast gates (tens of ns) and fast, high-fidelity readout</li>
+          <li>Lithographically fabricated — leverages existing chip-making infrastructure</li>
+          <li>Flexible coupling topology, tunable frequencies</li>
+          <li>Most mature control electronics and software stack</li>
+        </ul></div>
+        <div><p class="pc-title con">Cons</p><ul class="pc-list con">
+          <li>Short coherence relative to atomic qubits (dielectric and quasiparticle loss)</li>
+          <li>Needs dilution refrigeration (~10 mK)</li>
+          <li>Wiring density becomes a bottleneck as qubit count grows</li>
+          <li>Sensitive to two-level-system defects and stray TLS in materials</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead"><h2>Trapped ion</h2><span class="players">IonQ, Quantinuum, Alpine Quantum Technologies</span></div>
+      <p class="qdesc">Individual ions confined in electromagnetic traps encode qubits in long-lived electronic or hyperfine states, manipulated with laser or microwave pulses; entanglement is mediated through shared motional modes.</p>
+      <div class="prosconsGrid">
+        <div><p class="pc-title pro">Pros</p><ul class="pc-list pro">
+          <li>Longest coherence times of any mainstream platform</li>
+          <li>Highest reported two-qubit gate fidelities</li>
+          <li>All-to-all connectivity within a trap</li>
+          <li>Every ion of a given species is identical — no fabrication variance</li>
+        </ul></div>
+        <div><p class="pc-title con">Cons</p><ul class="pc-list con">
+          <li>Gate speeds are slow compared to solid-state qubits</li>
+          <li>Scaling requires ion shuttling or photonic interconnects between traps</li>
+          <li>Complex laser and vacuum-system engineering</li>
+          <li>Crosstalk grows as more ions share a trap's motional modes</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead"><h2>Neutral atom (Rydberg)</h2><span class="players">QuEra, Pasqal, Atom Computing</span></div>
+      <p class="qdesc">Individual neutral atoms are held in optical tweezer arrays and excited to Rydberg states to mediate strong, controllable interactions for entangling gates.</p>
+      <div class="prosconsGrid">
+        <div><p class="pc-title pro">Pros</p><ul class="pc-list pro">
+          <li>Arrays are reconfigurable in real time via optical tweezers</li>
+          <li>Excellent qubit-count scaling — hundreds to thousands demonstrated</li>
+          <li>Long coherence in the ground-state encoding</li>
+          <li>Natural fit for analog quantum simulation as well as gate-based computing</li>
+        </ul></div>
+        <div><p class="pc-title con">Cons</p><ul class="pc-list con">
+          <li>Rydberg-state gates are comparatively slow and sensitive to laser noise</li>
+          <li>Atom loss requires re-loading / error mitigation strategies</li>
+          <li>Mid-circuit readout and atom movement add latency</li>
+          <li>Younger error-correction track record than superconducting or ion platforms</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead"><h2>Spin qubits (semiconductor quantum dots)</h2><span class="players">Intel, Diraq, Silicon Quantum Computing</span></div>
+      <p class="qdesc">A single electron or hole spin confined in a gate-defined quantum dot, typically in isotopically purified silicon, encodes the qubit; control is via microwave or electric-dipole spin resonance.</p>
+      <div class="prosconsGrid">
+        <div><p class="pc-title pro">Pros</p><ul class="pc-list pro">
+          <li>Extremely small footprint — potentially the densest qubit packing</li>
+          <li>Compatible with existing CMOS foundry processes</li>
+          <li>Long coherence achievable in isotopically purified ²⁸Si</li>
+          <li>Fast gates with room for on-chip classical control integration</li>
+        </ul></div>
+        <div><p class="pc-title con">Cons</p><ul class="pc-list con">
+          <li>Device-to-device variability from fabrication disorder</li>
+          <li>Still needs cryogenic operation, though less extreme than transmons</li>
+          <li>Two-qubit coupling is short-range, so architecture is constrained</li>
+          <li>Fewer qubits demonstrated at scale so far than superconducting or ion systems</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead"><h2>NV / color centers (diamond)</h2><span class="players">Quantum Brilliance, academic groups</span></div>
+      <p class="qdesc">A point defect in diamond (nitrogen-vacancy or related color centers) hosts an electron spin qubit that can be optically initialized and read out, with nearby nuclear spins as long-lived memory qubits.</p>
+      <div class="prosconsGrid">
+        <div><p class="pc-title pro">Pros</p><ul class="pc-list pro">
+          <li>Can operate at room temperature</li>
+          <li>Optical interface makes it naturally suited to quantum networking / sensing</li>
+          <li>Nearby nuclear spins offer very long-lived quantum memory</li>
+          <li>Mature as a quantum sensor, derisking parts of the technology</li>
+        </ul></div>
+        <div><p class="pc-title con">Cons</p><ul class="pc-list con">
+          <li>Defects are randomly positioned — hard to place deterministically at scale</li>
+          <li>Optical readout and coupling efficiency are relatively low</li>
+          <li>Two-qubit gates between distant centers are slow (photon-mediated)</li>
+          <li>Far fewer qubits demonstrated than the leading compute-focused platforms</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead"><h2>Photonic</h2><span class="players">PsiQuantum, Xanadu</span></div>
+      <p class="qdesc">Qubits are encoded in properties of single photons (polarization, path, or continuous-variable states) and manipulated with linear optics, sometimes combined with measurement-based entangling operations.</p>
+      <div class="prosconsGrid">
+        <div><p class="pc-title pro">Pros</p><ul class="pc-list pro">
+          <li>Photons don't decohere from their environment in flight — ideal for networking</li>
+          <li>Naturally interfaces with existing fiber-optic infrastructure</li>
+          <li>Can operate at or near room temperature (excluding single-photon detectors)</li>
+          <li>Strong native fit for distributed / modular quantum computing</li>
+        </ul></div>
+        <div><p class="pc-title con">Cons</p><ul class="pc-list con">
+          <li>Entangling gates are inherently probabilistic without exotic resources</li>
+          <li>Photon loss directly translates to computational error</li>
+          <li>Requires large numbers of single-photon sources and detectors</li>
+          <li>No natural "memory" — photons must be used or lost</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="qcard">
+      <div class="qhead"><h2>Topological (Majorana-based)</h2><span class="players">Microsoft</span></div>
+      <p class="qdesc">A more speculative approach that aims to encode quantum information non-locally in the topology of exotic quasiparticles (such as Majorana zero modes), so that local noise cannot easily cause errors.</p>
+      <div class="prosconsGrid">
+        <div><p class="pc-title pro">Pros</p><ul class="pc-list pro">
+          <li>Error protection is built into the physics, not bolted on afterward</li>
+          <li>If realized, could need far less error-correction overhead than other platforms</li>
+          <li>Potentially compatible with semiconductor-nanowire fabrication</li>
+        </ul></div>
+        <div><p class="pc-title con">Cons</p><ul class="pc-list con">
+          <li>Unambiguous experimental demonstration of the qubit itself remains contested</li>
+          <li>No working multi-qubit processor has been shown yet</li>
+          <li>Materials science (clean topological superconductor-semiconductor interfaces) is extremely demanding</li>
+          <li>Highest scientific risk of any platform on this list</li>
+        </ul></div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>© 2026 Sudhir Kumar Sahu. Figures are approximate, illustrative ranges — check current literature for a specific number you plan to cite.</footer>
+</div>
+</body>
+</html>
